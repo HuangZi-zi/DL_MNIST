@@ -40,7 +40,8 @@ model = Net()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-for epoch in range(5):  # Adjust the number of epochs as needed
+print('Start Training')
+for epoch in range(18):  # Adjust the number of epochs as needed
     running_loss = 0.0
     for images, labels in train_loader:
         optimizer.zero_grad()
