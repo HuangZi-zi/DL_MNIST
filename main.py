@@ -3,17 +3,21 @@ import torch.nn as nn
 import torch.optim as optim
 from torchvision import datasets, transforms
 
+#超参数
+EPOUCH = 20
+BATCH_SIZE = 128
+LEARNING_RATE = 0.001
 
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.5,), (0.5,))
 ])
 
-train_dataset = datasets.MNIST('./data', train=True, download=True, transform=transform)
-test_dataset = datasets.MNIST('./data', train=False, download=True, transform=transform)
+train_dataset = datasets.MNIST('./data', train=True, download=False, transform=transform)
+test_dataset = datasets.MNIST('./data', train=False, download=False, transform=transform)
 
-train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
-test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=64)
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
+test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=BATCH_SIZE)
 
 
 class Net(nn.Module):
@@ -38,10 +42,10 @@ class Net(nn.Module):
 model = Net()
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 print('Start Training')
-for epoch in range(18):  # Adjust the number of epochs as needed
+for epoch in range(EPOUCH):  # Adjust the number of epochs as needed
     running_loss = 0.0
     for images, labels in train_loader:
         optimizer.zero_grad()
